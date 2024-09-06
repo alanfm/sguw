@@ -21,10 +21,12 @@ class Faq extends Model
         'tag_id',
     ];
 
-    protected $casts = [
-        'created_at' => 'date:d/m/Y H:i:s',
-        'updated_at' => 'date:d/m/Y H:i:s',
-    ];
+    public function casts(): array{
+        return [
+            'created_at' => 'date:d/m/Y H:i:s',
+            'updated_at' => 'date:d/m/Y H:i:s',
+        ];
+    }
 
     /**
      * @return LogOptions

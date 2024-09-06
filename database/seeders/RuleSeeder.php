@@ -24,6 +24,14 @@ class RuleSeeder extends Seeder
                 'group' => Group::firstOrCreate(['description' => 'Logs']),
                 'only' => ['Página inicial' => 'viewAny', 'Detalhes' => 'view'],
             ],
+            'devices' => ['group' => Group::firstOrCreate(['description' => 'Radius Dispositivos'])],
+            'clients' => [
+                'group' => Group::firstOrCreate(['description' => 'Clientes']),
+                'additional' => [
+                    'Upload de Clientes' => 'clients.upload',
+                ],
+            ],
+            'bonds' => ['group' => Group::firstOrCreate(['description' => 'Vínculo dos Clientes'])],
             'groups' => ['group' => Group::firstOrCreate(['description' => 'Páginas'])],
             'faqs' => ['group' => Group::firstOrCreate(['description' => 'FAQ'])],
             'tags' => ['group' => Group::firstOrCreate(['description' => 'Tags'])],

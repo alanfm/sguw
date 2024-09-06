@@ -1,13 +1,13 @@
-import { Collapse, Ripple, initTWE } from "tw-elements";
-import { Link } from "@inertiajs/react";
-import React, { useEffect, useState } from "react";
+import { Collapse, Ripple, initTWE } from "tw-elements"
+import { Link } from "@inertiajs/react"
+import React, { useEffect, useState } from "react"
 
 function Sidebar({ can }) {
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = useState(window.innerWidth)
 
     useEffect(() => {
         initTWE({Collapse, Ripple})
-    }, []);
+    }, [])
 
     const [accessCollapse] = useState(
         route().current('users.*') ||
@@ -15,27 +15,37 @@ function Sidebar({ can }) {
         route().current('rules.*') ||
         route().current('groups.*') ||
         route().current('activities.*')
-    );
+    )
+
+    const [radiusCollapse] = useState(
+        route().current('devices.*') ||
+        route().current('bonds.*')
+    )
 
     const [faqCollapse] = useState(
         route().current('faqs.*') ||
         route().current('tags.*')
-    );
+    )
 
-    const [chevronAccess, setChevronAccess] = useState(accessCollapse);
-    const [chevronFaq, setChevronFaq] = useState(faqCollapse);
+    const [chevronAccess, setChevronAccess] = useState(accessCollapse)
+    const [chevronRadius, setChevronRadius] = useState(radiusCollapse)
+    const [chevronFaq, setChevronFaq] = useState(faqCollapse)
 
     const toggleChevronAccess = () => {
-        setChevronAccess(!chevronAccess);
+        setChevronAccess(!chevronAccess)
+    }
+
+    const toggleChevronRadius = () => {
+        setChevronRadius(!chevronRadius)
     }
 
     const toggleChevronFaq = () => {
-        setChevronFaq(!chevronFaq);
+        setChevronFaq(!chevronFaq)
     }
 
     useEffect(() => {
-        setWidth(window.innerWidth);
-    }, [window.innerWidth]);
+        setWidth(window.innerWidth)
+    }, [window.innerWidth])
 
     return (
         <>
@@ -51,6 +61,85 @@ function Sidebar({ can }) {
                         </svg>
                         Principal
                     </Link>
+
+                    {(can.clients_viewAny) &&
+                        <Link
+                            href={route('clients.index', {term: '', page: 1})}
+                            className={(route().current('clients.*')? 'bg-gray-50 shadow-md ': '') + `text-gray-600 p-3 rounded-lg hover:bg-white hover:shadow-md transition flex gap-4`}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5" viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                            </svg>
+                            Clientes
+                        </Link>
+                    }
+
+                    {(can.devices_viewAny || can.bonds_viewAny) && <>
+                        <button
+                            className={
+                                (
+                                    radiusCollapse
+                                    ? 'bg-gray-50 shadow-md '
+                                    : ''
+                                ) + `text-gray-600 p-3 rounded-lg hover:bg-white hover:shadow-md transition flex items-center gap-4 focus:ring-0`}
+                            type="button"
+
+                            data-twe-collapse-init
+                            data-twe-target="#radiusCollapse"
+                            data-twe-ripple-init
+                            data-twe-ripple-color="light"
+                            aria-controls="radiusCollapse"
+                            aria-expanded="false"
+                            onClick={toggleChevronRadius}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="h-5 w-5" viewBox="0 0 16 16">
+                                <path d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8.5v3a1.5 1.5 0 0 1 1.5 1.5h5.5a.5.5 0 0 1 0 1H10A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5H.5a.5.5 0 0 1 0-1H6A1.5 1.5 0 0 1 7.5 10V7H2a2 2 0 0 1-2-2zm1 0v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1m6 7.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5"/>
+                            </svg>
+                            Radius
+                            <span className={"flex-1 flex justify-end "}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className={"h-5 w-5 transition " + (!chevronRadius? ' -rotate-90': '')}
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </span>
+                        </button>
+                        <div
+                            className={'flex flex-col gap-1 p-2 transition bg-neutral-200 rounded-md !visible ' + (chevronRadius? '': 'hidden')}
+                            data-twe-collapse-item
+                            id="radiusCollapse"
+                        >
+                            {can.bonds_viewAny && <Link
+                                href={route('bonds.index', {term: '', page: 1})}
+                                className={(route().current('bonds.*')? 'bg-gray-50 shadow-md ': '') + `text-gray-600 p-3 rounded-lg hover:bg-white hover:shadow-md transition flex gap-4`}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5" viewBox="0 0 16 16">
+                                    <path d="M3.5 15a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m9-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0 9a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5M16 3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-9 9a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m5.5 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-9-11a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 2a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                </svg>
+                                Grupos
+                            </Link>}
+                            {can.devices_viewAny && <Link
+                                href={route('devices.index', {term: '', page: 1})}
+                                className={(route().current('devices.*')? 'bg-gray-50 shadow-md ': '') + `text-gray-600 p-3 rounded-lg hover:bg-white hover:shadow-md transition flex gap-4`}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5" viewBox="0 0 16 16">
+                                    <path d="M5.525 3.025a3.5 3.5 0 0 1 4.95 0 .5.5 0 1 0 .707-.707 4.5 4.5 0 0 0-6.364 0 .5.5 0 0 0 .707.707"/>
+                                    <path d="M6.94 4.44a1.5 1.5 0 0 1 2.12 0 .5.5 0 0 0 .708-.708 2.5 2.5 0 0 0-3.536 0 .5.5 0 0 0 .707.707ZM2.5 11a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m4.5-.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0m2.5.5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m1.5-.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0m2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0"/>
+                                    <path d="M2.974 2.342a.5.5 0 1 0-.948.316L3.806 8H1.5A1.5 1.5 0 0 0 0 9.5v2A1.5 1.5 0 0 0 1.5 13H2a.5.5 0 0 0 .5.5h2A.5.5 0 0 0 5 13h6a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5h.5a1.5 1.5 0 0 0 1.5-1.5v-2A1.5 1.5 0 0 0 14.5 8h-2.306l1.78-5.342a.5.5 0 1 0-.948-.316L11.14 8H4.86zM14.5 9a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M8.5 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                                </svg>
+                                Dispositivos (AP)
+                            </Link>}
+                        </div>
+
+                    </>}
+
 
                     {(can.users_viewAny || can.permissions_viewAny || can.rules_viewAny || can.groups_viewAny || can.activities_viewAny) && <>
                         <button
@@ -217,4 +306,4 @@ function Sidebar({ can }) {
     )
 }
 
-export default Sidebar;
+export default Sidebar

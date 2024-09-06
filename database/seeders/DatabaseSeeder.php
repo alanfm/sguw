@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             TagSeeder::class,
+            // ClientBondSeeder::class,
+            // ClientSeeder::class,
         ]);
     }
 }

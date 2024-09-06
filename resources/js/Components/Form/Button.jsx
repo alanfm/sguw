@@ -35,7 +35,7 @@ function Button({ children, type = 'button', processing, className, onClick, col
             {href
             ?<Link
                 href={href}
-                className={`inline-flex items-center px-4 py-2 border border-transparent tracking-widest text-sm rounded-lg text-white transition ease-in-out duration-150 focus:ring-2 ${
+                className={`inline-flex items-center px-4 py-2 border border-transparent rounded-lg text-white transition ease-in-out duration-150 focus:ring-2 ${
                     processing && 'opacity-25 '
                 } ${colorize(color)}` + className}
             >
@@ -43,7 +43,7 @@ function Button({ children, type = 'button', processing, className, onClick, col
             </Link>
             :<button
                 type={type}
-                className={`inline-flex items-center px-4 py-2 border border-transparent tracking-widest text-sm rounded-lg text-white transition ease-in-out duration-150 focus:ring-2 ${
+                className={`inline-flex items-center px-4 py-2 border border-transparent rounded-lg text-white transition ease-in-out duration-150 focus:ring-2 ${
                     processing && 'opacity-25 '
                 } ${colorize(color)}` + className}
                 disabled={processing}

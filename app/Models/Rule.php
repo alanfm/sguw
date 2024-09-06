@@ -33,13 +33,12 @@ class Rule extends Model
         'group_id',
     ];
 
-    /**
-     * @var array $casts
-     */
-    protected $casts = [
-        'created_at' => 'datetime:d/m/Y H:i:s',
-        'updated_at' => 'datetime:d/m/Y H:i:s',
-    ];
+    public function casts(): array{
+        return [
+            'created_at' => 'date:d/m/Y H:i:s',
+            'updated_at' => 'date:d/m/Y H:i:s',
+        ];
+    }
 
     /**
      * @return LogOptions

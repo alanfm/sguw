@@ -11,7 +11,12 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\Radius\ClientBondController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\Radius\ClientController;
+use App\Http\Controllers\Admin\Radius\DeviceController;
+use App\Http\Controllers\Admin\Radius\RadcheckController;
+use App\Models\ClientBond;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +54,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function() {
     Route::resource('activities', ActivityController::class)->only(['index', 'show', 'destroy']);
     Route::resource('faqs', FaqController::class);
     Route::resource('tags', TagController::class);
+    Route::prefix('radius')->group(function() {
+        Route::resource('devices', DeviceController::class)->parameters(['devices' => 'devices']);
+        // Route::resource('radcheck', RadcheckController::class)->parameters(['radcheck' => 'radcheck']);
+        Route::resource('clients', ClientController::class);
+        Route::get('upload/clients', [ClientController::class, 'uploadIndex'])->name('clients.uploadIndex');
+        Route::get('upload/clients/create', [ClientController::class, 'uploadCreate'])->name('clients.uploadCreate');
+        Route::post('upload/clients/create', [ClientController::class, 'uploadStore'])->name('clients.uploadStore');
+        Route::resource('bonds', ClientBondController::class)->parameters(['bonds' => 'client_bond']);
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -59,6 +59,46 @@ return [
             ]) : [],
         ],
 
+        'RADIUS_servidor' => [
+            'driver' => 'mysql',
+            'url' => env('RADIUS_SERVIDOR_URL'),
+            'host' => env('RADIUS_SERVIDOR_HOST', '127.0.0.1'),
+            'port' => env('RADIUS_SERVIDOR_PORT', '3306'),
+            'database' => env('RADIUS_SERVIDOR_DATABASE', 'laravel'),
+            'username' => env('RADIUS_SERVIDOR_USERNAME', 'root'),
+            'password' => env('RADIUS_SERVIDOR_PASSWORD', ''),
+            'unix_socket' => env('RADIUS_SERVIDOR_SOCKET', ''),
+            'charset' => env('RADIUS_SERVIDOR_CHARSET', 'utf8mb4'),
+            'collation' => env('RADIUS_SERVIDOR_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'RADIUS_discente' => [
+            'driver' => 'mysql',
+            'url' => env('RADIUS_DISCENTE_URL'),
+            'host' => env('RADIUS_DISCENTE_HOST', '127.0.0.1'),
+            'port' => env('RADIUS_DISCENTE_PORT', '3306'),
+            'database' => env('RADIUS_DISCENTE_DATABASE', 'laravel'),
+            'username' => env('RADIUS_DISCENTE_USERNAME', 'root'),
+            'password' => env('RADIUS_DISCENTE_PASSWORD', ''),
+            'unix_socket' => env('RADIUS_DISCENTE_SOCKET', ''),
+            'charset' => env('RADIUS_DISCENTE_CHARSET', 'utf8mb4'),
+            'collation' => env('RADIUS_DISCENTE_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

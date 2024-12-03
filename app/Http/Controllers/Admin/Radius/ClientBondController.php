@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Radius\StoreClientBondRequest;
 use App\Http\Requests\Radius\UpdateClientBondRequest;
 use App\Models\ClientBond;
-use App\Models\Radius\Radgroupcheck;
+use App\Models\Discentes\GroupRADIUS as DiscentesGroup;
+use App\Models\Servidores\GroupRADIUS as ServidoresGroup;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,7 +47,12 @@ class ClientBondController extends Controller
     {
         $this->authorize('bonds.create', ClientBond::class);
 
-        return Inertia::render('Admin/Radius/Bond/Create');
+        return Inertia::render('Admin/Radius/Bond/Create', [
+            'servers' => [
+                ['id' => ClientBond::SERVIDORES, 'name' => 'Servidores'],
+                ['id' => ClientBond::DISCENTES, 'name' => 'Discentes'],
+            ]
+        ]);
     }
 
     /**
@@ -61,20 +67,20 @@ class ClientBondController extends Controller
         $this->authorize('bonds.create', ClientBond::class);
 
         try {
-            // $group = Radgroupcheck::firstOrCreate(
-            //     ['groupname' => Str::of($request->description)->slug('_')],
-            //     [
-            //         'attribute' => 'Simultaneous-Use',
-            //         'op' => ':=',
-            //         'value' => $request->value,
-            //     ]
-            // );
+            $group = [
+                'groupname' => Str::of($request->description)->slug('_'),
+                'attribute' => 'Simultaneous-Use',
+                'op' => ':=',
+                'value' => $request->value,
+            ];
 
-            // $data = $request->only(['description', 'priority']);
-            // $data['radgroupcheck_id'] = $group->id;
+            if ($request->get('server') == ClientBond::DISCENTES)
+                $group = DiscentesGroup::create($group);
+            else
+                $group = ServidoresGroup::create($group);
 
-            // $client = ClientBond::create($data);
-            // return redirect()->route('bonds.show', $client)->with('flash', ['status' => 'success', 'message' => 'Registro criado com sucesso.']);
+            $client = ClientBond::create(array_merge($request->only(['description', 'priority', 'server']), ['radgroupcheck_id' => $group->id]));
+            return redirect()->route('bonds.show', $client)->with('flash', ['status' => 'success', 'message' => 'Registro criado com sucesso.']);
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return redirect()->route('bonds.index')->with('flash', ['status' => 'danger', 'message' => $e->getMessage()]);

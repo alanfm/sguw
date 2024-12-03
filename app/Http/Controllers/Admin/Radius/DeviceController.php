@@ -59,8 +59,8 @@ class DeviceController extends Controller
         $this->authorize('devices.create');
 
         try {
-            $device = Device::create($request->validated());
-            return redirect()->route('devices.show', $device)->with('flash', ['status' => 'success', 'message' => 'Registro criado com sucesso.']);
+            // $device = Device::create($request->validated());
+            // return redirect()->route('devices.show', $device)->with('flash', ['status' => 'success', 'message' => 'Registro criado com sucesso.']);
         } catch (Exception $e) {
             return redirect()->route('devices.index')->with('flash', ['status' => 'danger', 'message' => $e->getMessage()]);
         }
@@ -115,7 +115,7 @@ class DeviceController extends Controller
         $this->authorize('devices.update', $device);
 
         try {
-            $device->update($request->validated());
+            // $device->update($request->validated());
             return redirect()->route('devices.show', $device)->with('flash', ['status' => 'success', 'message' => 'Registro atualizado com sucesso.']);
         } catch (Exception $e) {
             return redirect()->route('devices.index')->with('flash', ['status' => 'danger', 'message' => $e->getMessage()]);
@@ -134,7 +134,7 @@ class DeviceController extends Controller
         $this->authorize('devices.delete', $device);
 
         try {
-            $device->delete();
+            // $device->delete();
             return redirect()->route('devices.index')->with('flash', ['status' => 'success', 'message' => 'Registro apagado com sucesso.']);
         } catch (Exception $e) {
             return redirect()->route('devices.index')->with('flash', ['status' => 'danger', 'message' => $e->getMessage()]);

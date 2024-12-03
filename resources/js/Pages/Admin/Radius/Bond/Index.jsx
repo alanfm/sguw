@@ -21,6 +21,9 @@ function Index({ data, count, page, termSearch, can }) {
         return (
             <tr key={index} className={"border-t transition hover:bg-neutral-100 " + (index % 2 == 0? 'bg-neutral-50': '')}>
                 <td className="px-1 py-3 font-light">
+                    <Link href={can.view? route('bonds.show', item.id): route('bonds.index', {term: term, page: currentPage})}>{item.servidor == 1 ? 'Servidores': 'Discentes'}</Link>
+                </td>
+                <td className="px-1 py-3 font-light">
                     <Link href={can.view? route('bonds.show', item.id): route('bonds.index', {term: term, page: currentPage})}>{item.description}</Link>
                 </td>
                 <td className="px-1 py-3 font-light">
@@ -71,6 +74,7 @@ function Index({ data, count, page, termSearch, can }) {
                     <table className="w-full table-auto text-neutral-600">
                         <thead>
                             <tr className="border-b">
+                                <th className="px-1 pt-3 font-semibold text-left">Servidor</th>
                                 <th className="px-1 pt-3 font-semibold text-left">Nome</th>
                                 <th className="px-1 pt-3 font-semibold text-left">Dispositivos simultâneos</th>
                                 <th className="px-1 pt-3 font-semibold text-left">Prioridade</th>

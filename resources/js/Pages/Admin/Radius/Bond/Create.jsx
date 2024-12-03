@@ -4,8 +4,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Panel from "@/Components/Dashboard/Panel";
 import Form from "./Components/Form";
 
-function Create() {
+function Create({ servers }) {
     const { data, setData, post, processing, errors } = useForm({
+        server: "",
         description: "",
         value: "",
         priority: 1,
@@ -38,6 +39,7 @@ function Create() {
                         processing={processing}
                         onHandleChange={onHandleChange}
                         handleSubmit={handleSubmit}
+                        servers={servers}
                     />
                 </Panel>
             </AuthenticatedLayout>

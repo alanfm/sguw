@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Radius;
 
+use App\Models\ClientBond;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -25,6 +26,7 @@ class StoreClientBondRequest extends FormRequest
     public function rules()
     {
         return [
+            'server' => 'required|in:'.ClientBond::SERVIDORES.','.ClientBond::DISCENTES,
             'description' => 'required|min:3',
             'priority' => 'required|numeric',
             'value' => 'required|numeric',

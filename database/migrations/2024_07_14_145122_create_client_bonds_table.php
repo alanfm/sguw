@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('client_bonds', function (Blueprint $table) {
             $table->id();
+            $table->integer('server')->default(1);
             $table->string('description');
             $table->integer('priority')->default(1);
             $table->integer('radgroupcheck_id');

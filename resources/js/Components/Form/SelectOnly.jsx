@@ -1,6 +1,11 @@
 import InputError from "@/Components/InputError";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+/**
+ * Esse componente recebe em data um conjunto de objetos com valor padronizados da seguinte forma:
+ * {id: 1, name: "name"}
+ */
+
 function SelectOnly({ data, onChange, error, value, label, name }) {
     const [toggle, setToggle] = useState(false);
     const [term, setTerm] = useState('');

@@ -2,10 +2,12 @@ import React from "react";
 import Input from "@/Components/Form/Input";
 import InputError from "@/Components/InputError";
 import Button from "@/Components/Form/Button";
+import SelectOnly from "@/Components/Form/SelectOnly";
 
-export default function Form({data, errors, handleSubmit, onHandleChange, processing }) {
+export default function Form({data, errors, handleSubmit, onHandleChange, processing, servers }) {
     return (
         <form onSubmit={handleSubmit} autoComplete="off">
+            <SelectOnly label={'Servidor'} onChange={onHandleChange} error={errors.server} name={'server'} data={servers} value={data.server} />
             <div className="mb-4">
                 <label htmlFor="description" className="font-light">Nome</label>
                 <Input value={data.description} name={'description'} handleChange={onHandleChange} required={true} placeholder="Nome do grupo" />
